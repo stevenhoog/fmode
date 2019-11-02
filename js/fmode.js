@@ -25,7 +25,7 @@ function checkColorScheme() {
     if (window.matchMedia && window.matchMedia(fmodeSettings['scheme']).matches) {
        c = !c;
     }
-    // Call function chnageFavicon. Set bool to int
+    // Call function changeFavicon. Set bool to int
     changeFavicon(fmodeSettings['favicon_mode'][+c], fmodeSettings['favicon_mode'][+!c]);
 }
 
