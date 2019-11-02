@@ -25,11 +25,18 @@
     </style>
     <script type="text/javascript">
 
-    function changeFavicon(mode1, mode2) {
+    	var favicons = {
+    		"dark": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfjCwIROhpE8tRSAAACnklEQVRIx5XVS2xUZRTA8d/cdqYtYJVMbXCjxCCgaKCEuIBoQjSEIPgkIUGSooGFulCJYnRnXJkY6YZEA8ZFNYHgwsTGuEBNfIaFjwhioVHBRsqjDWFaH21n+rngdrgzc2fGnm9z73n87znfd75zM9KkzZ3WW2uZLllTRp3ytc/8YlJT6bDRISNKQsUq+tP7NmhrHL5Cv3HBlGM+Nl4FCQretbxecOQRg4LgZ7vktTlQA7hq3SyTFt7rkqDkA0tj3UupgOC8HbWIrXH4Qfmybm8dQHDBg5XhqwwJgg91JbT1AcFJK645zndEEAy5qwLbCBD0a591fMzfgpLnq8pqDBi3mQjzPKEDJx1p3iYJWaBXe4SV1oIfnJsTgHv0RLjXQrDGOtGcAN3uj2StiV9vd9ijcwJkrIt0WlxW3GSvRQmHrqaIZa063ZBQ9NjvWPx8o8ebAvIsdabhYTVek5GSUh36lHOKTTIothoz7NZU47f2OKhHMOi3KluQt1qbAmx3OTW9YW+5IBh0h1a5ipV1vX7BN9DqYV+arlvnpzpSM+wT9F07sD3OzglwmyETtiSb4m5HzfxPQFaf4At5XvRMuRMWeSellKMpgO0KSp6CIUUDVseGTvtqEN9XdCds8ofgK91wShD8apsWcJ23qwqZNmBD+Zrl7DAsGPPAVcUnsdtlz8mBbgM1ZVy0BRnL7VcQTHol/qAXFGOnv7wsC1Y6XYP4yW5v+N2MYMqb5s/Ws8SJstOEp+Nxvcu/NYjZwgpetSC5Jbv9k0h1U7wTH6X2xIzjtsV5lqXd6ybLLt/F8+E+o1XBRae9lpgeCZnnWWfKKe7Tgha9TrhiwhUjfvSeJy2uHXmzP6jIKjttdIuczz1kHBk3WyJn2qgRY+lX+z9Kvazzb9VrFwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOS0xMS0wMlQxNzo1ODoyNiswMTowMPqC3cgAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTktMTEtMDJUMTc6NTg6MjYrMDE6MDCL32V0AAAAV3pUWHRSYXcgcHJvZmlsZSB0eXBlIGlwdGMAAHic4/IMCHFWKCjKT8vMSeVSAAMjCy5jCxMjE0uTFAMTIESANMNkAyOzVCDL2NTIxMzEHMQHy4BIoEouAOoXEXTyQjWVAAAAAElFTkSuQmCC",
+    		
+    		"light": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElNRQfjCwIROyMC7G0bAAACyklEQVRIx52VS2xUZRiGn3PambaAFTOlqRttDAKKBkoICwgkBkIaLoLGhERJKgYW6EJDEAM7woqESDcYjBAWxUSDCxMb4wI0UYSw8BJuFhqujVSwDWFaAm1n+rCYM9POzKnT+v6r//I95/2+/893AkokQA2v8BpLmUsDCYbp4wq/8iN/MRTwnxLrbPUre81arIx/+6WrrTH3kdhgnG+HA+qw5/zeAUuV9pjzYhFi6Bt2qXrJraas8QvjdMl1BsaEt/mvmvUb55jz84nx+sfNRQgR34rCj5jKWRR3OZHu+nohEREX2q3qtzY4hp0YoJedPwaY7glVu311rEAVANphrYQCtLIWGOUzLkCFmx7TRlZBCExjC3XAZU5MIRxm0EZtCCxgKQB/cGfy0QAspyUEVvAMAItZFqU0WTWyKiTB4mj6El/zJkwBEbAspJ7mwsKz7KIpfwdAQ0XE3GrqmTluoYVDnIs8zOKdioAUzvGm/19DIVmyE9CHuUOmgoNMNf308ELs5ll2cIQWpIvrJXuSYhE1pBHf9n6svR4Pe1ft8mWrTRaNhE/boZ5BrHajvzgyYZ6nrLPMgNiutucnDe7w1pQAL9rtoOsxPwKXeNLRyQDEhO3qz6bwYz9wZgRp8mhMKieLAebqljbrdsFuM3a6KELUe7AM8btNRV0C13hbPW2j4BVVr7nJKhGf8vOSREbsdLVh1OaSbrZH7XetCP4QHbvvRyZFbLSzLI17rhcD53nItDrkHqsEcKeZ6NBDd5sQcYFXyxDn3eYBbziqDvup0/MdcbYXC4cGfd9AxK0+LkPkE0u71xmOq+k2H42zuiaqxHexb2LUC24yUfxPqHW/Q4Ujv9ks4kr7SoIzXnVfbrf0WUzzQ28WLB60SqyyzYs+cNAH9vqnx33PZstaXpBDELKQd2nleZL8xAYGgIDnmE2SEfropZ9MXM9+AlrL3wTzW22xAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE5LTExLTAyVDE3OjU5OjM1KzAxOjAw6AKs9QAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOS0xMS0wMlQxNzo1OTozNSswMTowMJlfFEkAAABXelRYdFJhdyBwcm9maWxlIHR5cGUgaXB0YwAAeJzj8gwIcVYoKMpPy8xJ5VIAAyMLLmMLEyMTS5MUAxMgRIA0w2QDI7NUIMvY1MjEzMQcxAfLgEigSi4A6hcRdPJCNZUAAAAASUVORK5CYII="
+
+    	};
+
+    function changeFavicon(mode) {
     	var iconLinks = document.querySelectorAll("link[rel*=icon], link[rel=manifest]");
         for (var i=0; i < iconLinks.length; i++) {
         	var iconHref = iconLinks[i].getAttribute('href');
-        	iconLinks[i].setAttribute("href", iconHref.replace(mode1, mode2));
+        	iconLinks[i].setAttribute("href", favicons[mode]);
         }
     }
 
@@ -37,9 +44,9 @@
 
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             console.log("💀 DARK MODE ACTIVATED 💀");
-            changeFavicon('dark', 'light');
+            changeFavicon('light');
         } else {
-        	changeFavicon('light', 'dark');
+        	changeFavicon('dark');
         }
 
 
