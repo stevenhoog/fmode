@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--<link rel="apple-touch-icon" sizes="152x152" href="images/favicon-dark/apple-touch-icon.png">-->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-dark/favicon-32x32.png">
+    <!--<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-dark/favicon-16x16.png">-->
+   	<link rel="manifest" href="images/favicon-dark/site.webmanifest">
+    <link rel="mask-icon" href="images/favicon-dark/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <style type="text/css">
+    body {
+        background-color: #F2F2F2;
+        color: #333;
+    }
+
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+        body {
+            background-color: #333;
+            color: white;
+        }
+    }
+    </style>
+    <script type="text/javascript">
+
+    function changeFavicon(mode1, mode2) {
+    	var iconLinks = document.querySelectorAll("link[rel*=icon], link[rel=manifest]");
+        for (var i=0; i < iconLinks.length; i++) {
+        	var iconHref = iconLinks[i].getAttribute('href');
+        	iconLinks[i].setAttribute("href", iconHref.replace(mode1, mode2));
+        }
+    }
+
+    function checkColorScheme() {
+
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            console.log("💀 DARK MODE ACTIVATED 💀");
+            changeFavicon('dark', 'light');
+        } else {
+        	changeFavicon('light', 'dark');
+        }
+
+
+    }
+
+    window.onload = checkColorScheme();
+
+    window.matchMedia("(prefers-color-scheme: dark)").addListener(function() {
+        checkColorScheme();
+    });
+    </script>
+    <title>Test</title>
+</head>
+
+<body>
+    <h1>This website is awesome</h1>
+</body>
+
+</html>
