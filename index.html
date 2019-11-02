@@ -23,34 +23,7 @@
         }
     }
     </style>
-    <script type="text/javascript">
-
-    function changeFavicon(mode1, mode2) {
-    	var iconLinks = document.querySelectorAll("link[rel*=icon], link[rel=manifest]");
-        for (var i=0; i < iconLinks.length; i++) {
-        	var iconHref = iconLinks[i].getAttribute('href');
-        	iconLinks[i].setAttribute("href", iconHref.replace(mode1, mode2));
-        }
-    }
-
-    function checkColorScheme() {
-
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            console.log("💀 DARK MODE ACTIVATED 💀");
-            changeFavicon('dark', 'light');
-        } else {
-        	changeFavicon('light', 'dark');
-        }
-
-
-    }
-
-    window.onload = checkColorScheme();
-
-    window.matchMedia("(prefers-color-scheme: dark)").addListener(function() {
-        checkColorScheme();
-    });
-    </script>
+    <script type="text/javascript" src="js/fmode.js"></script>
     <title>Test</title>
 </head>
 
